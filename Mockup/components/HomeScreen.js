@@ -76,20 +76,11 @@ const HomeScreen = () => {
             <View style={styles.Item}>
               {products.map((product) => (
                 <Item
-                  key={product.id}
-                  product={product}
-                  itemPhoto={{ uri: product.image }}
-                  itemName={product.title}
-                  itemType={product.category}
-                  itemPrice={`$ ${product.price}`}
-                  addToCart={() => addToCart({
-                    id: product.id,
-                    name: product.title,
-                    type: product.category,
-                    price: `$ ${product.price}`, // Ensure price is a string
-                    image: { uri: product.image }
-                  })}
-                />
+                key={product.id}
+                product={product}
+                image={{ uri: product.image }}
+                addToCart={() => addToCart(product)}
+              />
               ))}
             </View>
           </View>
@@ -104,32 +95,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff'
   },
 
-  logo:{
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    zIndex:5,
-    marginTop:-50
-
-},
-profileContainer:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-between',
-    width:'auto',
-    height:'auto',
-    marginBottom: 25,
-    zIndex:10,
-
-},
-searchBag:{
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    gap:31,
-    paddingRight:8
-
-},
   ourStoryText: {
     fontSize: 20,
   },
@@ -146,7 +111,7 @@ searchBag:{
   imgBg: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E3E3E3',
+    backgroundColor: '#f3f3f3',
     width: 40,
     height: 40,
     borderRadius: 20,

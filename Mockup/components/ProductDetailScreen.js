@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
 const ProductDetailScreen = ({ route }) => {
@@ -8,26 +7,22 @@ const ProductDetailScreen = ({ route }) => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <Image source={product.image} style={styles.productImage} />
-        <View style={styles.detailsContainer}>
-          <Text style={styles.productName}>{product.name}</Text>
-          <Text style={styles.productType}>{product.type}</Text>
-          <Text style={styles.productPrice}>{product.price}</Text>
-          <Text style={styles.descriptionTitle}>Product Description</Text>
-          <Text style={styles.descriptionText}>
-            {product.description || 'No description available.'}
-          </Text>
-        </View>
-      </ScrollView>
-      <TouchableOpacity 
-        style={styles.backButton} 
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.backButtonText}>Back to Cart</Text>
+    <ScrollView style={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>← Back</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+      <Image source={{ uri: product.image }} style={styles.productImage} />
+      <View style={styles.detailsContainer}>
+        <Text style={styles.title}>{product.title}</Text>
+        <Text style={styles.category}>{product.category}</Text>
+        <Text style={styles.price}>${product.price}</Text>
+        <Text style={styles.materials}>Materials</Text>
+        <Text style={styles.description}>{product.description}</Text>
+      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.checkoutButton}>
+        <Text style={styles.checkoutButtonText}>+  ADD TO BASKET</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
@@ -36,49 +31,57 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  backButton: {
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#007AFF',
+  },
   productImage: {
     width: '100%',
     height: 300,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   detailsContainer: {
     padding: 20,
   },
-  productName: {
+  title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: 'black',
     marginBottom: 10,
   },
-  productType: {
-    fontSize: 18,
-    color: '#555',
-    marginBottom: 10,
-  },
-  productPrice: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#DD8560',
-    marginBottom: 20,
-  },
-  descriptionTitle: {
+  price: {
     fontSize: 20,
-    fontWeight: 'bold',
+    color: '#DD8560',
+    fontWeight:'bold',
     marginBottom: 10,
   },
-  descriptionText: {
+  category: {
+    fontSize: 20,
+    textTransform:'capitalize',
+    color: '#555555',
+    marginBottom: 10,
+  },
+  description: {
     fontSize: 16,
     lineHeight: 24,
+    color: '#555555',
   },
-  backButton: {
+  materials: {
+    fontSize: 22 ,
+    marginBottom: 8,
+
+  },
+  checkoutButton: {
     backgroundColor: '#000',
-    padding: 15,
+    padding: 25,
     alignItems: 'center',
-    margin: 15,
   },
-  backButtonText: {
+  checkoutButtonText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: 'black',
   },
 });
 

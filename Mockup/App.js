@@ -9,8 +9,11 @@ import 'react-native-gesture-handler';
 import TestScreen from './components/TestScreen'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+import { navigation } from '@react-navigation/native';
 
 
 const CustomHeaderTitle = () => (
@@ -22,8 +25,10 @@ const CustomHeaderTitle = () => (
 );
 
 
-const CustomHeaderRight = () => (
-  <View style={{display:'flex', flexDirection:'row', gap:15}}>
+const CustomHeaderRight = () => {
+  const navigation = useNavigation();
+  return(
+  <View style={{display:'flex', flexDirection:'row', gap:15, paddingRight:15}}>
   <TouchableOpacity >
     <Image 
       source={require('./assets/Search.png')} 
@@ -39,22 +44,9 @@ const CustomHeaderRight = () => (
   
   </View>
   
-);
+)};
 
 
-
-const DrawerNavigator = () => {
-  return (
-    <Drawer.Navigator initialRouteName="Home" screenOptions={{headerShown: false}} >
-      <Drawer.Screen name="Store" component={''} />
-      <Drawer.Screen name="Locations" component={''} />
-      <Drawer.Screen name="Blog" component={''} />
-      <Drawer.Screen name="Jewelery" component={''} />
-      <Drawer.Screen name="Electronic" component={''} />
-      <Drawer.Screen name="Clothing" component={''} />
-    </Drawer.Navigator>
-  );
-};
 
 
 export default function App() {
@@ -62,21 +54,61 @@ export default function App() {
     
     <NavigationContainer>
       <Drawer.Navigator
-      screenOptions={({ navigation }) => ({
+      
+      >
+      <Drawer.Screen name="Home" component={HomeScreen}  
+      options={() => ({
         headerTitle: () => <CustomHeaderTitle />,
-        headerRight: () => <CustomHeaderRight />,
+        headerRight: ({ navigation }) => <CustomHeaderRight navigation={navigation} />,
         headerStyle: {
           backgroundColor: '#fff',
-          paddingLeft:15
+          elevation: 0
         },
-        headerTintColor: '#000', // Set your desired text color
+        headerTintColor: '#000',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
       })}
-      >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Cart" component={CartScreen} />
+      />
+      <Drawer.Screen name="Cart" component={CartScreen} 
+      options={() => ({
+        headerTitle: () => <CustomHeaderTitle />,
+        headerRight: () => (<TouchableOpacity >
+          <Image 
+            source={require('./assets/Search.png')} 
+            style={{ width: 24, height: 24, marginRight: 10 }}
+          />
+        </TouchableOpacity>),
+        headerStyle: {
+          backgroundColor: '#fff',
+          elevation: 0
+        },
+        headerTintColor: '#000', 
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        drawerItemStyle: {
+          display:'none'
+        }
+      })}
+      />
+      <Drawer.Screen name="ProductDetail" component={ProductDetailScreen} 
+       options={() => ({
+        headerTitle: () => <CustomHeaderTitle />,
+        headerRight: () => <CustomHeaderRight />,
+        headerStyle: {
+          backgroundColor: '#fff',
+          elevation: 0
+        },
+        headerTintColor: '#000',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        drawerItemStyle: {
+          display:'none'
+        }
+      })}
+      />
       <Drawer.Screen name="Store" component={''} />
       <Drawer.Screen name="Locations" component={''} />
       <Drawer.Screen name="Blog" component={''} />

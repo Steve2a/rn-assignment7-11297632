@@ -1,66 +1,64 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
-
+import React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Item = ({ product, addToCart, image }) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.itemContainer}>
-      <View style={styles.dressContainer}>
-        <View style={styles.itemImage}>
-          <Image style={styles.dressImage} source={image} />
-        </View>
+      <TouchableOpacity 
+        style={styles.dressContainer}
+        onPress={() => navigation.navigate('ProductDetail', { product })}
+      >
+        <Image style={styles.dressImage} source={image} />
         <TouchableOpacity style={styles.addButton} onPress={() => addToCart(product)}>
           <Image source={require('../assets/add_circle.png')} />
         </TouchableOpacity>
-      </View>
-      <Text style={styles.nameText}>{product.title}</Text>
+      </TouchableOpacity>
+      <Text style={styles.nameText} numberOfLines={1}>{product.title}</Text>
       <Text style={styles.typeText}>{product.category}</Text>
-      <Text style={styles.priceText}>{product.price}</Text>
+      <Text style={styles.priceText}>${product.price.toFixed(2)}</Text>
     </View>
   );
 };
-
-export default Item
 
 const styles = StyleSheet.create({
   itemContainer: {
     paddingBottom: 20,
     width: 185,
-
   },
-
-  itemImage: {
+  dressContainer: {
     height: 260,
     width: 185,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex:1,
+    marginBottom: 10,
   },
-
   dressImage: {
-    objectFit: 'cover',
-    height: 260,
-    width: 185,
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+  },
+  addButton: {
+    position: 'absolute',
+    right: 10,
+    bottom: 10,
+    zIndex: 2,
+  },
+  nameText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
   },
   typeText: {
-    color: '#555555'
+    fontSize: 14,
+    color: '#555555',
+    marginBottom: 5,
   },
-
   priceText: {
-    fontSize: 20,
-    color: '#DD8560'
+    fontSize: 18,
+    color: '#DD8560',
+    fontWeight: 'bold',
   },
+});
 
-  dressContainer: {
-    display:'flex',
-    zIndex: 1,
-
-  },
-
-  addButton: {
-    zIndex: 2,
-    alignSelf:'flex-end',
-    paddingRight:10,
-    bottom:32
-  },
-})
+export default Item;

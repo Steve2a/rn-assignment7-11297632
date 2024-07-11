@@ -42,10 +42,10 @@ const CartScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Your Cart</Text>
+          <Text style={styles.headerText}>CHECKOUT</Text>
         </View>
         {cartItems.map((item) => (
           <View key={item.id} style={styles.cartItem}>
@@ -53,12 +53,12 @@ const CartScreen = () => {
               style={styles.productImage}
               onPress={() => navigateToProductDetail(item)}
             >
-              <Image source={item.image} style={styles.itemImage} />
+              <Image source={{ uri: item.image}} style={styles.itemImage} />
             </TouchableOpacity>
             <View style={styles.itemDetails}>
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemType}>{item.type}</Text>
-              <Text style={styles.itemPrice}>{item.price}</Text>
+              <Text style={styles.itemName}>{item.title}</Text>
+              <Text style={styles.itemType}>{item.category}</Text>
+              <Text style={styles.itemPrice}>${item.price}</Text>
             </View>
             <TouchableOpacity 
               style={styles.removeButton} 
@@ -75,7 +75,7 @@ const CartScreen = () => {
       <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.checkoutButton}>
         <Text style={styles.checkoutButtonText}>Checkout</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -84,12 +84,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    padding: 15,
-  },
   headerText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: 'black',
+    textAlign:'center'
   },
   cartItem: {
     flexDirection: 'row',
@@ -143,12 +141,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     padding: 15,
     alignItems: 'center',
-    margin: 15,
   },
   checkoutButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'black',
   },
 });
 
